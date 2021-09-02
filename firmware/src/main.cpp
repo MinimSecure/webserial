@@ -3,10 +3,11 @@
 
 WiFiClient client;
 
-const char* ssid = "____";
-const char* password = "_____";
-const char* endpoint = "_____";
-int port = 8888;
+// Configuration Variables
+const char* ssid = "____"; // The SSID of your WiFi network
+const char* password = "_____"; // The passphrase of your WiFi network
+const char* endpoint = "_____"; // The endpoint on your network for it to connect to (IP Address of your server)
+const int port = 8888;
 
 void setup() {
   Serial.begin(115200);
@@ -14,7 +15,7 @@ void setup() {
   WiFi.begin(ssid, password);
   WiFi.setAutoReconnect(true);
   WiFi.persistent(true);
-  
+
   while (WiFi.status() != WL_CONNECTED){
     delay(500);
   }
