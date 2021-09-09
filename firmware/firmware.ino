@@ -1,26 +1,30 @@
+// WebSerial Firmware
+
 #include <ESP8266WiFi.h>
+#include <WiFiManager.h>
 #include <ArduinoOTA.h>
 
 WiFiClient client;
+WiFiManager wifiManager;
 
 // Configuration Variables
-const char* ssid = "____"; // The SSID of your WiFi network
-const char* password = "_____"; // The passphrase of your WiFi network
-const char* endpoint = "_____"; // The endpoint on your network for it to connect to (IP Address of your server)
+const char* endpoint;
 const int port = 8888;
 
 void setup() {
   Serial.begin(115200);
 
-  WiFi.begin(ssid, password);
-  WiFi.setAutoReconnect(true);
-  WiFi.persistent(true);
+  WiFiManagerParameter webserial_endpoint("webserial_endpoint", "webserial endpoint", "192.168.X.X", 64);
+  wifiManager.addParameter(&webserial_endpoint);
+  wifiManager.autoConnect("WebSerial-Provisioning", "webserial");
 
-  while (WiFi.status() != WL_CONNECTED){
+  while (WiFi.status() != WL_CONNECTED) {
     delay(500);
   }
 
-  if(client.connect(endpoint, port)) {
+   endpoint = webserial_endpoint.getValue();
+
+  if (client.connect(endpoint, port)) {
     client.print(WiFi.macAddress());
     client.print(WiFi.localIP());
     delay(500);
@@ -51,7 +55,7 @@ void loop() {
   }
 
   if (!client.connected()) {
-    if(client.connect(endpoint, port)) {
+    if (client.connect(endpoint, port)) {
       client.print(WiFi.macAddress());
       client.print(WiFi.localIP());
       delay(500);
