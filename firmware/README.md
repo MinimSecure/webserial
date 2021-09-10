@@ -2,12 +2,8 @@
 
 ## Getting started
 
- - https://platformio.org/
- - esp8266 01
+ - [Ardiono IDE](https://www.arduino.cc/en/software)
+ - Install [WiFi Manager](https://github.com/tzapu/WiFiManager)
+ - Add the [Arduino core for ESP8266](https://github.com/esp8266/Arduino)
 
-```
-pio run
-
-# OTA Upgrade
-pip run -t upload --upload-port IP_ADDR_HERE
-```
+Open up firmware.ini in the Arduino IDE and build / upload to your device
